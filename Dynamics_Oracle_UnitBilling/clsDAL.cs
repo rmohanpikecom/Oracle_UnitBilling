@@ -41,9 +41,8 @@ namespace Dynamics_Oracle_UnitBilling
         public static DataSet Dynamics_UniBilling_List_Create(string BatchName)
         {
             var configuration = Config();
-            string BatchSize = System.Configuration.ConfigurationManager.AppSettings["BatchSize"]!.ToString();
             string dsn = dynConnectionString;
-            string cmd = configuration.GetSection("qryUnitBillingGetList_Create").Value!.Replace("@BatchName", "'" + BatchName + "'");
+            string cmd = configuration.GetSection("qryUnitBillingGetList_Create").Value!;
             DataSet ds = SqlHelper.ExecuteDataset(dsn, CommandType.Text, cmd);
             return ds;
         }
@@ -67,9 +66,21 @@ namespace Dynamics_Oracle_UnitBilling
         public static DataSet Dynamics_UniBilling_List_Update(string BatchName)
         {
             var configuration = Config();
-            string BatchSize = System.Configuration.ConfigurationManager.AppSettings["BatchSize"]!.ToString();
             string dsn = dynConnectionString;
-            string cmd = configuration.GetSection("qryUnitBillingGetList_Update").Value!.Replace("@BatchName", "'" + BatchName + "'");
+            string cmd = configuration.GetSection("qryUnitBillingGetList_Update").Value!;
+            DataSet ds = SqlHelper.ExecuteDataset(dsn, CommandType.Text, cmd);
+            return ds;
+        }
+        #endregion
+
+
+
+        #region Dynamics_HeaderCount
+        public static DataSet Dynamics_HeaderCount(string BatchName)
+        {
+            var configuration = Config();
+            string dsn = dynConnectionString;
+            string cmd = configuration.GetSection("qryHeaderCount").Value!;
             DataSet ds = SqlHelper.ExecuteDataset(dsn, CommandType.Text, cmd);
             return ds;
         }

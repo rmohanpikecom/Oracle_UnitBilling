@@ -10,10 +10,10 @@ namespace Dynamics_Oracle_UnitBilling
     {
         static string AppName = "OracleUnitBillingAutomation";
 
-        static string UnitBilling_Url = System.Configuration.ConfigurationManager.AppSettings["UnitBilling_Url"]!.ToString();
+        static string Oracle_Url = System.Configuration.ConfigurationManager.AppSettings["Oracle_Url"]!.ToString();
         static string UnitBilling_Sub_Url = System.Configuration.ConfigurationManager.AppSettings["UnitBilling_Sub_Url"]!.ToString();
-        static string PPM_Url = System.Configuration.ConfigurationManager.AppSettings["PPM_Url"]!.ToString();
         static string PPM_SubUrl = System.Configuration.ConfigurationManager.AppSettings["PPM_Sub_Url"]!.ToString();
+        static string PPM_EssJob_Sub_Url = System.Configuration.ConfigurationManager.AppSettings["PPM_EssJob_Sub_Url"]!.ToString();
 
         static string UserName = System.Configuration.ConfigurationManager.AppSettings["ServiceUserId"]!.ToString();
         static string Password = clsTools.Decrypt(System.Configuration.ConfigurationManager.AppSettings["ServicePassword"]!.ToString(), true);
@@ -27,7 +27,9 @@ namespace Dynamics_Oracle_UnitBilling
         {
             try
             {
-                //CreateUnitBillingEvents();
+                Console.WriteLine("DynamicsPikeService - " + AppName + " - Started");
+
+                CreateUnitBillingEvents();
 
                 UpdateUnitBillingEvents();
 
@@ -43,68 +45,61 @@ namespace Dynamics_Oracle_UnitBilling
         #region CreateUnitBillingEvents
         public static void CreateUnitBillingEvents()
         {
-            Console.WriteLine("DynamicsPikeService - " + AppName + " - Started");
-            FileStream? stream = null;
             // File name  
+            FileStream? stream = null;            
             string? filePath = System.Configuration.ConfigurationManager.AppSettings["FilePath"]!.ToString();
             string? FolderName = System.Configuration.ConfigurationManager.AppSettings["FolderName"]!.ToString();
-
             System.IO.Directory.CreateDirectory(filePath + FolderName);
-
-            string? fileName = filePath + FolderName + "\\UnitBilling_Log_Create_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            stream = new FileStream(fileName, FileMode.OpenOrCreate);
-            // Create a StreamWriter from FileStream  
-            StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
-            writer.AutoFlush = true;
-
 
             string strPayload = "";
             string strHPayload = "";
             string strHeaderEntity = "hsl_oracleintegrationbatch_headers";
             string strEntity = "hsl_oracleintegrationbatch_detailedrecords";
-            string BatchHeaderId = "";
-            string DetailRecordId = "";
-            string IntegrationBatchHeaderId = "";
-            int count = 0;
-
-            string ExpenditureBatch = "";
-
             string hsl_oracle_batch_status_header = "";
-
             string hsl_oracle_status_details = "";
             string hsl_oracle_message_details = "";
             string hsl_ppm_pc_transaction_id_details = "";
             string hsl_unprocessedtransactionreferenceid_details = "";
 
-
-
+            string DetailRecordId = "";
+            string IntegrationBatchHeaderId = "";
+            string ExpenditureBatchName = "";            
 
             DataSet dsBatchHeader = clsDAL.Dynamics_UnitBilling_BatchHeader_Create();
 
-
             if (dsBatchHeader.Tables[0].Rows.Count > 0 )
             {
+                string? fileName = filePath + FolderName + "\\UnitBilling_Log_Create_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+                stream = new FileStream(fileName, FileMode.OpenOrCreate);
+                // Create a StreamWriter from FileStream  
+                StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
+                writer.AutoFlush = true;
+
+                writer.WriteLine("DynamicsPikeService (Create) - " + AppName + " - Started");
+                
+
                 for (int i = 0; i < dsBatchHeader.Tables[0].Rows.Count;i++) 
                 {
                     int HeaderException_Flag = 0;
-                    ExpenditureBatch = dsBatchHeader.Tables[0].Rows[i]["ExpenditureBatch"].ToString()!;
-                    PPM_EXEC_ESSJOB(ExpenditureBatch);
+                    ExpenditureBatchName = dsBatchHeader.Tables[0].Rows[i]["ExpenditureBatch"].ToString()!;
+                    PPM_EXEC_ESSJOB(ExpenditureBatchName);
                     IntegrationBatchHeaderId = dsBatchHeader.Tables[0].Rows[i]["IntegrationBatchHeaderId"].ToString()!;
 
-                    hsl_oracle_batch_status_header = "In Process";
+                    writer.WriteLine("Featching Header Records for Batch = " + ExpenditureBatchName);
+                    writer.WriteLine("Processing Header Count " + (i + 1).ToString() + " out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
+                    Console.WriteLine("Processing Header Count " + (i + 1).ToString() + " out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
+                    writer.WriteLine("Updating the Header Record Status to In Progress for "+ hsl_oracle_batch_status_header);
 
+                    //Updating the Header Table Status to In Process
+                    hsl_oracle_batch_status_header = "In Process";
                     strHPayload = "{ "
                                      + "\"hsl_oracle_batch_status\":\"" + hsl_oracle_batch_status_header + "\"}";
 
                     UpdateDynamics(strHeaderEntity, IntegrationBatchHeaderId!, strHPayload);
-
-                    DataSet dsDetails = clsDAL.Dynamics_UniBilling_List_Create(ExpenditureBatch);
+                    DataSet dsDetails = clsDAL.Dynamics_UniBilling_List_Create(ExpenditureBatchName);
 
                     try
                     {
-                        writer.WriteLine("DynamicsPikeService - " + AppName + " - Total Unit Billing Events " + dsBatchHeader.Tables[0].Rows.Count.ToString());
-                        Console.WriteLine("Processing Header Count " + (i+1).ToString() +" out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
-
                         if (dsDetails.Tables[0].Rows.Count > 0)
                         {
                             for (int j = 0; j < dsDetails.Tables[0].Rows.Count; j++)
@@ -112,24 +107,24 @@ namespace Dynamics_Oracle_UnitBilling
                                 try
                                 {
                                     Console.WriteLine("Processing Detail Count " + (j + 1).ToString() + " out of " + dsDetails.Tables[0].Rows.Count.ToString());
+                                    writer.WriteLine("Processing Detail Count " + (j + 1).ToString() + " out of " + dsDetails.Tables[0].Rows.Count.ToString());
 
                                     int RecordFlag = 1;
 
                                     byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(UserName + ":" + Password);
                                     string credentials = System.Convert.ToBase64String(toEncodeAsBytes);
 
-                                    BatchHeaderId = dsDetails.Tables[0].Rows[j]["hsl_batch_hdrid"].ToString()!;
                                     DetailRecordId = dsDetails.Tables[0].Rows[j]["DetailRecordId"].ToString()!.ToLower();                                    
 
                                     string? OriginalTransactionReference = "Replicon_" + DetailRecordId;
 
 
-
                                     #region Check if the record got created
-
+                                    writer.WriteLine("Checking if the Transaction is already pushed to PPM for Detail Record Id "+ DetailRecordId);
                                     string? PPM_QueryParam = "?q=OriginalTransactionReference=" + OriginalTransactionReference + ";NetZeroItemFlag is null&expand=ProjectStandardCostCollectionFlexFields";
+                                    writer.WriteLine("Payload for Getting the Transaction Number " + PPM_QueryParam);
 
-                                    var PPMoptions = new RestClientOptions(PPM_Url)
+                                    var PPMoptions = new RestClientOptions(Oracle_Url)
                                     {
                                         MaxTimeout = -1,
                                     };
@@ -139,10 +134,10 @@ namespace Dynamics_Oracle_UnitBilling
                                     PPMrequest.AddHeader("Authorization", "Basic " + credentials);
 
                                     RestResponse PPMresponse = PPMclient.Execute(PPMrequest);
-                                    Console.WriteLine(PPMresponse.Content);
+                                    writer.WriteLine("PPM Response to get TransactionNumber : " + PPMresponse.Content);
+
                                     if (PPMresponse.StatusCode == System.Net.HttpStatusCode.OK)
                                     {
-
                                         //Update the PPM Status
                                         string Result = PPMresponse.Content!.ToString();
                                         dynamic dyArray = JsonConvert.DeserializeObject<dynamic>(PPMresponse.Content!)!;
@@ -152,13 +147,12 @@ namespace Dynamics_Oracle_UnitBilling
 
                                         writer.WriteLine("TransactionNumber : " + TransactionNumber);
                                         Console.WriteLine("TransactionNumber : " + TransactionNumber);
+
                                         if (TransactionNumber != null && TransactionNumber != "" && TransactionNumber != "0")
                                         {
-
                                             RecordFlag = 0;
-                                            // Prepare web request and pass token.
-                                            //Update the PPM Status details
 
+                                            writer.WriteLine("Updating the Details Record with the Transaction Number into Dynamics for Detail ID= " + DetailRecordId);
 
                                             hsl_oracle_status_details = "Success";
                                             hsl_oracle_message_details = "Transaction Number Updated";
@@ -166,32 +160,21 @@ namespace Dynamics_Oracle_UnitBilling
 
                                             //Update the PPM Status
                                             strPayload = "{ "
-                                           + "\"hsl_oracle_status\":\"" + hsl_oracle_status_details + "\","
-                                           + "\"hsl_oracle_message\":\"" + hsl_oracle_message_details + "\","
-                                           + "\"hsl_ppm_pc_transaction_id\":\"" + hsl_ppm_pc_transaction_id_details + "\"}";
+                                            + "\"hsl_oracle_status\":\"" + hsl_oracle_status_details + "\","
+                                            + "\"hsl_oracle_message\":\"" + hsl_oracle_message_details + "\","
+                                            + "\"hsl_ppm_pc_transaction_id\":\"" + hsl_ppm_pc_transaction_id_details + "\"}";
 
-                                            writer.WriteLine("Dynamics Success Update Payload for " + " Entity : " + strEntity + " Batch HeaderId :  " + BatchHeaderId);
-                                           // UpdateDynamics(strEntity, DetailRecordId!, strPayload);
+                                            UpdateDynamics(strEntity, DetailRecordId!, strPayload);
                                         }
                                     }
 
                                     #endregion
 
-                                    RecordFlag = 1;
-
                                     if (RecordFlag == 1)
                                     {
-                                        Console.WriteLine(DateTime.Now.ToString("yyyy-MM-ddTHH\\_mm") + "DynamicsPikeService - " + AppName + " - Started " + count++);
-                                        writer.WriteLine(DateTime.Now.ToString("yyyy-MM-ddTHH\\_mm") + "DynamicsPikeService - " + AppName + " - Started " + count++);
 
-                                        Console.WriteLine("DynamicsPikeService - " + AppName + " Started :" + DateTime.Now.ToString("yyyy-MM-ddTHH\\_mm") + count++);
-                                        writer.WriteLine("DynamicsPikeService - " + AppName + " Started :" + DateTime.Now.ToString("yyyy-MM-ddTHH\\_mm") + count++);
-
-                                        Console.WriteLine("Oracle - " + AppName + " - Processing " + j.ToString() + " out of " + dsDetails.Tables[0].Rows.Count.ToString());
-                                        Console.WriteLine("Oracle - " + AppName + " - Details - IN If Lookp ");
-
-                                        Console.WriteLine("Processing Unit Billing Events Records - " + j.ToString() + " - out of " + dsDetails.Tables[0].Rows.Count.ToString() + " - Processing - " + dsDetails.Tables[0].Rows[j]["ExpenditureBatch"].ToString());
-                                        writer.WriteLine("Processing Unit Billing Events Records - " + j.ToString() + " - out of " + dsDetails.Tables[0].Rows.Count.ToString() + " - Processing - " + dsDetails.Tables[0].Rows[j]["ExpenditureBatch"].ToString());
+                                        Console.WriteLine("Processing Unit Billing Detail Events Records - " + j.ToString() + " - out of " + dsDetails.Tables[0].Rows.Count.ToString());
+                                        writer.WriteLine("Processing Unit Billing Detail Events Records - " + j.ToString() + " - out of " + dsDetails.Tables[0].Rows.Count.ToString());
 
                                         
                                         string? BusinessUnit = dsDetails.Tables[0].Rows[j]["BusinessUnit"].ToString();
@@ -219,12 +202,13 @@ namespace Dynamics_Oracle_UnitBilling
                                         string? OrganizationId = dsDetails.Tables[0].Rows[j]["ORGANIZATION_ID_Display"].ToString();
 
 
+                                        writer.WriteLine("Updating the Detail Record Status to In Progress for " + DetailRecordId);
                                         strPayload = "{\"hsl_oracle_status\":\"In Process\" }";
                                         UpdateDynamics(strEntity, DetailRecordId!, strPayload);
 
 
                                         //PPM UPC CREATE
-                                        var options = new RestClientOptions(UnitBilling_Url)
+                                        var options = new RestClientOptions(Oracle_Url)
                                         {
                                             MaxTimeout = -1,
                                         };
@@ -235,7 +219,7 @@ namespace Dynamics_Oracle_UnitBilling
 
                                         var body = "{"
 
-                                                        + "\"ExpenditureBatch\":\"" + ExpenditureBatch + "\","
+                                                        + "\"ExpenditureBatch\":\"" + ExpenditureBatchName + "\","
                                                         + "\"BusinessUnit\":\"" + BusinessUnit + "\","
                                                         + "\"TransactionSource\":\"" + TransactionSource + "\","
                                                         + "\"Document\":\"" + Document + "\","
@@ -262,12 +246,14 @@ namespace Dynamics_Oracle_UnitBilling
                                         request.AddStringBody(body, DataFormat.Json);
                                         RestResponse response = client.Execute(request);
 
-
+                                        writer.WriteLine("Payload for Detail Transaction Record :  " + body);
 
                                         if (response.Content != "" && response.StatusCode.ToString() == "Created")
                                         {
                                             dynamic dyArray = JsonConvert.DeserializeObject<dynamic>(response.Content!)!;
-                                            writer.WriteLine("Oracle Response :  " + response.Content!);
+                                            writer.WriteLine("Oracle Response for Detail Transaction Record :  " + response.Content!);
+
+                                            writer.WriteLine("Updating the Detail Record Status in Dynamics along with other values for " + DetailRecordId);
 
                                             hsl_oracle_status_details = "Success";
                                             hsl_oracle_message_details = "Sent to UPC";
@@ -279,8 +265,7 @@ namespace Dynamics_Oracle_UnitBilling
                                            + "\"hsl_oracle_message\":\"" + hsl_oracle_message_details + "\","
                                            + "\"hsl_unprocessedtransactionreferenceid\":\"" + hsl_unprocessedtransactionreferenceid_details + "\"}";
 
-
-                                            writer.WriteLine("Dynamics Success Update Payload for " + " Entity : " + strEntity + " Batch HeaderId :  " + BatchHeaderId);
+                                            writer.WriteLine("Updating the Dynamics Detail Record Columns with the attached payload " + strPayload);
                                             UpdateDynamics(strEntity, DetailRecordId!, strPayload);
                                         }
                                     }
@@ -288,6 +273,9 @@ namespace Dynamics_Oracle_UnitBilling
                                 catch (Exception exp)
                                 {
                                     HeaderException_Flag = 1;
+
+                                    writer.WriteLine("Oralce Response was Errored out with the following Exceptions "+ exp.Message);
+                                    Console.WriteLine("Oralce Response was Errored out with the following Exceptions " + exp.Message);
 
                                     hsl_oracle_status_details = "Error";
                                     hsl_oracle_message_details = exp.Message.ToString();
@@ -297,12 +285,7 @@ namespace Dynamics_Oracle_UnitBilling
                                    + "\"hsl_oracle_status\":\"" + hsl_oracle_status_details + "\","
                                    + "\"hsl_oracle_message\":\"" + hsl_oracle_message_details + "\"}";
 
-                                    writer.WriteLine("Dynamics Failure Update Payload for " + " Entity : " + strEntity + " BatchHeaderId :  " + BatchHeaderId);
-                                    UpdateDynamics(strEntity, DetailRecordId!, strPayload);
-                                    writer.WriteLine("Dynamics Failure Update Payload :  " + strPayload);
-                                    writer.WriteLine("Dynamics Failure Message :  " + exp.Message.ToString());
-                                    writer.WriteLine("=========================================================================");
-
+                                    writer.WriteLine("Updating the Dynamics Detail Record Columns with the attached payload (Exception) " + strPayload);
                                     UpdateDynamics(strEntity, DetailRecordId!, strPayload);
                                 }
                             }
@@ -311,33 +294,23 @@ namespace Dynamics_Oracle_UnitBilling
                     }
                     catch (Exception exp)
                     {
-                        Console.WriteLine(exp.Message.ToString());
-                        if (ExceptionOnScreen == 1)
-                        {
-                            Console.WriteLine("Press any key to Continue");
-                            Console.ReadKey();
-                        }
+                        HeaderException_Flag = 1;
+                        writer.WriteLine("Application Exception " + exp.Message);
+                        Console.WriteLine("Application Exception " + exp.Message);
                     }
 
-                    if(HeaderException_Flag==1)
-                        hsl_oracle_batch_status_header = "In Process";
-                    else
+                    if (HeaderException_Flag == 0)
+                    {
                         hsl_oracle_batch_status_header = "Sent to UPC";
-
-                    strHPayload = "{ "
+                        strHPayload = "{ "
                                      + "\"hsl_oracle_batch_status\":\"" + hsl_oracle_batch_status_header + "\"}";
-
-
-                    UpdateDynamics(strHeaderEntity, IntegrationBatchHeaderId!, strHPayload);
-                    writer.WriteLine("Dynamics Success Update Payload for " + " Entity : " + strEntity + " DetailID :  " + DetailRecordId);
-                    writer.WriteLine("Dynamics Success Update Payload :  " + strHPayload);
-
-                    writer.WriteLine("Dynamics Success Update Payload :  " + strPayload);
-
-                    PPM_EXEC_ESSJOB(ExpenditureBatch);
-
+                        UpdateDynamics(strHeaderEntity, IntegrationBatchHeaderId!, strHPayload);
+                        writer.WriteLine("Dynamics Success Update for Header Table Payload :  " + strHPayload);
+                    }
+                    PPM_EXEC_ESSJOB(ExpenditureBatchName);
                 }
-                
+
+                writer.WriteLine("DynamicsPikeService (Create) - " + AppName + " - Completed");
             }
         }
         #endregion
@@ -346,57 +319,58 @@ namespace Dynamics_Oracle_UnitBilling
         #region UpdateUnitBillingEvents
         public static void UpdateUnitBillingEvents()
         {
-            Console.WriteLine("DynamicsPikeService - " + AppName + " - Started");
+            Console.WriteLine("DynamicsPikeService (Update) - " + AppName + " - Started");
+
             FileStream? stream = null;
             // File name  
             string? filePath = System.Configuration.ConfigurationManager.AppSettings["FilePath"]!.ToString();
             string? FolderName = System.Configuration.ConfigurationManager.AppSettings["FolderName"]!.ToString();
-
             System.IO.Directory.CreateDirectory(filePath + FolderName);
 
-            string? fileName = filePath + FolderName + "\\UnitBilling_Log_Update_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
-            stream = new FileStream(fileName, FileMode.OpenOrCreate);
-            // Create a StreamWriter from FileStream  
-            StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
-            writer.AutoFlush = true;
-
-
+            string hsl_oracle_batch_status_header = "";
+            string hsl_oracle_status_details = "";
+            string hsl_oracle_message_details = "";
+            string hsl_ppm_pc_transaction_id_details = "";
             string strPayload = "";
             string strHPayload = "";
             string strHeaderEntity = "hsl_oracleintegrationbatch_headers";
             string strEntity = "hsl_oracleintegrationbatch_detailedrecords";
-            string BatchHeaderId = "";
+
             string DetailRecordId = "";
             string IntegrationBatchHeaderId = "";
-            int count = 0;
-
-            string ExpenditureBatch = "";
-
-            string hsl_oracle_batch_status_header = "";
-
-            string hsl_oracle_status_details = "";
-            string hsl_oracle_message_details = "";
-            string hsl_ppm_pc_transaction_id_details = "";
-
+            string ExpenditureBatchName = "";
 
             DataSet dsBatchHeader = clsDAL.Dynamics_UnitBilling_BatchHeader_Update();
 
-
             if (dsBatchHeader.Tables[0].Rows.Count > 0)
             {
+                string? fileName = filePath + FolderName + "\\UnitBilling_Log_Update_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+                stream = new FileStream(fileName, FileMode.OpenOrCreate);
+                // Create a StreamWriter from FileStream  
+                StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
+                writer.AutoFlush = true;
+
+                writer.WriteLine("DynamicsPikeService (Update) - " + AppName + " - Started");
+
+
                 for (int i = 0; i < dsBatchHeader.Tables[0].Rows.Count; i++)
                 {
                     int HeaderException_Flag = 0;
-                    ExpenditureBatch = dsBatchHeader.Tables[0].Rows[i]["ExpenditureBatch"].ToString()!;
-                    PPM_EXEC_ESSJOB(ExpenditureBatch);
+                    ExpenditureBatchName = dsBatchHeader.Tables[0].Rows[i]["ExpenditureBatch"].ToString()!;
+                    PPM_EXEC_ESSJOB(ExpenditureBatchName);
                     IntegrationBatchHeaderId = dsBatchHeader.Tables[0].Rows[i]["IntegrationBatchHeaderId"].ToString()!;
 
+                    writer.WriteLine("Featching Header Records for Batch = " + ExpenditureBatchName);
+                    writer.WriteLine("Processing Header Count " + (i + 1).ToString() + " out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
+                    Console.WriteLine("Processing Header Count " + (i + 1).ToString() + " out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
 
-                    DataSet dsDetails = clsDAL.Dynamics_UniBilling_List_Update(ExpenditureBatch);
+                    DataSet dsDetails = clsDAL.Dynamics_UniBilling_List_Update(ExpenditureBatchName);
                     try
                     {
                         writer.WriteLine("DynamicsPikeService - " + AppName + " - Total Unit Billing Events " + dsBatchHeader.Tables[0].Rows.Count.ToString());
                         Console.WriteLine("Processing Header Count " + (i + 1).ToString() + " out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
+                        Console.WriteLine("---------------------------------------");
+
 
                         if (dsDetails.Tables[0].Rows.Count > 0)
                         {
@@ -405,6 +379,7 @@ namespace Dynamics_Oracle_UnitBilling
                                 try
                                 {
                                     Console.WriteLine("Processing Detail Count " + (j + 1).ToString() + " out of " + dsDetails.Tables[0].Rows.Count.ToString());
+                                    writer.WriteLine("Processing Detail Count " + (j + 1).ToString() + " out of " + dsDetails.Tables[0].Rows.Count.ToString());
 
                                     byte[] toEncodeAsBytes = System.Text.ASCIIEncoding.ASCII.GetBytes(UserName + ":" + Password);
                                     string credentials = System.Convert.ToBase64String(toEncodeAsBytes);
@@ -414,11 +389,13 @@ namespace Dynamics_Oracle_UnitBilling
                                     string? OriginalTransactionReference = "Replicon_" + DetailRecordId;
 
 
-
+                                    writer.WriteLine("Checking if the Transaction is already pushed to PPM for Detail Record Id " + DetailRecordId);
                                     #region Check if the record got created
                                     string? PPM_QueryParam = "?q=OriginalTransactionReference=" + OriginalTransactionReference + ";NetZeroItemFlag is null&expand=ProjectStandardCostCollectionFlexFields";
 
-                                    var PPMoptions = new RestClientOptions(PPM_Url)
+                                    writer.WriteLine("Payload for Getting the Transaction Number " + PPM_QueryParam);
+
+                                    var PPMoptions = new RestClientOptions(Oracle_Url)
                                     {
                                         MaxTimeout = -1,
                                     };
@@ -428,7 +405,9 @@ namespace Dynamics_Oracle_UnitBilling
                                     PPMrequest.AddHeader("Authorization", "Basic " + credentials);
 
                                     RestResponse PPMresponse = PPMclient.Execute(PPMrequest);
-                                    Console.WriteLine(PPMresponse.Content);
+                                    writer.WriteLine("PPM Response to get TransactionNumber : " + PPMresponse.Content);
+
+                                    //Console.WriteLine(PPMresponse.Content);
                                     if (PPMresponse.StatusCode == System.Net.HttpStatusCode.OK)
                                     {
 
@@ -441,12 +420,14 @@ namespace Dynamics_Oracle_UnitBilling
 
                                         writer.WriteLine("TransactionNumber : " + TransactionNumber);
                                         Console.WriteLine("TransactionNumber : " + TransactionNumber);
+                                        Console.WriteLine("");
+
                                         if (TransactionNumber != null && TransactionNumber != "" && TransactionNumber != "0")
                                         {
+                                            writer.WriteLine("Updating the Details Record with the Transaction Number into Dynamics for Detail ID= " + DetailRecordId);
 
                                             // Prepare web request and pass token.
                                             //Update the PPM Status details
-
 
                                             hsl_oracle_status_details = "Success";
                                             hsl_oracle_message_details = "Transaction Number Updated";
@@ -458,18 +439,21 @@ namespace Dynamics_Oracle_UnitBilling
                                            + "\"hsl_oracle_message\":\"" + hsl_oracle_message_details + "\","
                                            + "\"hsl_ppm_pc_transaction_id\":\"" + hsl_ppm_pc_transaction_id_details + "\"}";
 
-                                            //writer.WriteLine("Dynamics Success Update Payload for " + " Entity : " + strEntity + " Batch HeaderId :  " + BatchHeaderId);
                                             UpdateDynamics(strEntity, DetailRecordId!, strPayload);
+
                                         }
                                     }
 
                                     #endregion
 
-                                    
+
                                 }
                                 catch (Exception exp)
                                 {
                                     HeaderException_Flag = 1;
+
+                                    writer.WriteLine("Oralce Response was Errored out with the following Exceptions " + exp.Message);
+                                    Console.WriteLine("Oralce Response was Errored out with the following Exceptions " + exp.Message);
 
                                     hsl_oracle_status_details = "Error";
                                     hsl_oracle_message_details = exp.Message.ToString();
@@ -479,12 +463,7 @@ namespace Dynamics_Oracle_UnitBilling
                                    + "\"hsl_oracle_status\":\"" + hsl_oracle_status_details + "\","
                                    + "\"hsl_oracle_message\":\"" + hsl_oracle_message_details + "\"}";
 
-                                    //writer.WriteLine("Dynamics Failure Update Payload for " + " Entity : " + strEntity + " BatchHeaderId :  " + BatchHeaderId);
-                                    UpdateDynamics(strEntity, DetailRecordId!, strPayload);
-                                    writer.WriteLine("Dynamics Failure Update Payload :  " + strPayload);
-                                    writer.WriteLine("Dynamics Failure Message :  " + exp.Message.ToString());
-                                    writer.WriteLine("=========================================================================");
-
+                                    writer.WriteLine("Updating the Dynamics Detail Record Columns with the attached payload (Exception) " + strPayload);
                                     UpdateDynamics(strEntity, DetailRecordId!, strPayload);
                                 }
                             }
@@ -493,26 +472,26 @@ namespace Dynamics_Oracle_UnitBilling
                     }
                     catch (Exception exp)
                     {
-                        Console.WriteLine(exp.Message.ToString());
-                        if (ExceptionOnScreen == 1)
-                        {
-                            Console.WriteLine("Press any key to Continue");
-                            Console.ReadKey();
-                        }
+                        HeaderException_Flag = 1;
+                        writer.WriteLine("Application Exception " + exp.Message);
+                        Console.WriteLine("Application Exception " + exp.Message);
                     }
 
                     if (HeaderException_Flag == 0)
-                        hsl_oracle_batch_status_header = "Success";
+                    {
+                        
+                        DataSet dsHeaderCount = clsDAL.Dynamics_HeaderCount(ExpenditureBatchName);
 
-                    strHPayload = "{ "
-                                     + "\"hsl_oracle_batch_status\":\"" + hsl_oracle_batch_status_header + "\"}";
+                        if (dsHeaderCount.Tables[0].Rows[0]["RecordCount"].ToString() == "0")
+                        {
+                            hsl_oracle_batch_status_header = "Success";
 
-
-                    UpdateDynamics(strHeaderEntity, IntegrationBatchHeaderId!, strHPayload);
-                    writer.WriteLine("Dynamics Success Update Payload for " + " Entity : " + strEntity + " DetailID :  " + DetailRecordId);
-                    writer.WriteLine("Dynamics Success Update Payload :  " + strHPayload);
-
-                    writer.WriteLine("Dynamics Success Update Payload :  " + strPayload);
+                            strHPayload = "{ "
+                                         + "\"hsl_oracle_batch_status\":\"" + hsl_oracle_batch_status_header + "\"}";
+                            UpdateDynamics(strHeaderEntity, IntegrationBatchHeaderId!, strHPayload);
+                            writer.WriteLine("Dynamics Success Update for Header Table Payload :  " + strHPayload);
+                        }
+                    }
                 }
 
             }
@@ -538,7 +517,8 @@ namespace Dynamics_Oracle_UnitBilling
             Console.WriteLine("ESSParameters_Units : " + ESSParameters_Batch);
             string strESS_Job_Units = PPM_ESSJOB(PPM_EssJob_Url, PPM_EssJob_Sub_Url, UserName, Password, ESSParameters_Batch);
             Console.WriteLine("PPM ESS JOB Created Successful!!");
-           
+            Console.WriteLine("");
+
         }
         #endregion
 
@@ -583,7 +563,7 @@ namespace Dynamics_Oracle_UnitBilling
                 TransactionType = dyArray.JobDefName!.ToString();
                 Transaction_Id = dyArray.ReqstId;
                 strEss_Job_Result = Transaction_Id.ToString();
-                Console.WriteLine("Oracle Transaction ID :  " + strEss_Job_Result);
+                Console.WriteLine("Oracle Transaction ID :  " + strEss_Job_Result);               
             }
 
             return strEss_Job_Result!;
