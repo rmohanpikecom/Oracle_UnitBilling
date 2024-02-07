@@ -1,0 +1,28 @@
+﻿20240202105940DynamicsPikeService - OracleUnitBillingAutomation - Started
+DynamicsPikeService - UnitBilling CREATE Started :20240202105940
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_detailedrecords ID d612ec03-13c1-ee11-9079-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_headers ID d5a6b106-13c1-ee11-9079-000d3a9bc14a
+TransactionNumber : 82959185
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  d5a6b106-13c1-ee11-9079-000d3a9bc14a
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  d612ec03-13c1-ee11-9079-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_detailedrecords ID b6897a0a-13c1-ee11-9079-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_headers ID d5a6b106-13c1-ee11-9079-000d3a9bc14a
+TransactionNumber : 82959184
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  d5a6b106-13c1-ee11-9079-000d3a9bc14a
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  b6897a0a-13c1-ee11-9079-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_detailedrecords ID b9897a0a-13c1-ee11-9079-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_headers ID d5a6b106-13c1-ee11-9079-000d3a9bc14a
+TransactionNumber : 82959187
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  d5a6b106-13c1-ee11-9079-000d3a9bc14a
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  b9897a0a-13c1-ee11-9079-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_detailedrecords ID be897a0a-13c1-ee11-9079-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_headers ID d5a6b106-13c1-ee11-9079-000d3a9bc14a
+TransactionNumber : 82959197
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  d5a6b106-13c1-ee11-9079-000d3a9bc14a

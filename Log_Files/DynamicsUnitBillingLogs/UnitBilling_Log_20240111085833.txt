@@ -1,0 +1,50 @@
+﻿20240111085833DynamicsPikeService - OracleUnitBillingAutomation - Started
+DynamicsPikeService - UnitBilling CREATE Started :20240111085833
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID ff6c4f38-6caf-ee11-a569-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID 012b3636-6caf-ee11-a569-000d3a9bc14a
+TransactionNumber : 
+TransactionNumber : 
+UnprocessedTransactionReferenceId :
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  ff6c4f38-6caf-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Error"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID 026d4f38-6caf-ee11-a569-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID 012b3636-6caf-ee11-a569-000d3a9bc14a
+TransactionNumber : 
+TransactionNumber : 
+UnprocessedTransactionReferenceId :
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  026d4f38-6caf-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Error"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID 066d4f38-6caf-ee11-a569-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID 012b3636-6caf-ee11-a569-000d3a9bc14a
+TransactionNumber : 82947176
+TransactionNumber : 82947176
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  012b3636-6caf-ee11-a569-000d3a9bc14a
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  066d4f38-6caf-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID 16f9bfa4-6baf-ee11-a569-000d3a9bc14a
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID ced509a4-6baf-ee11-a569-000d3a9a943c
+TransactionNumber : 
+TransactionNumber : 
+UnprocessedTransactionReferenceId :
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  16f9bfa4-6baf-ee11-a569-000d3a9bc14a
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Error"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID 032b3636-6caf-ee11-a569-000d3a9bc14a
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID 012b3636-6caf-ee11-a569-000d3a9bc14a
+TransactionNumber : 82947177
+TransactionNumber : 82947177
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  012b3636-6caf-ee11-a569-000d3a9bc14a
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  032b3636-6caf-ee11-a569-000d3a9bc14a
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID 959aafa2-6baf-ee11-a569-000d3a9bcd68
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID ced509a4-6baf-ee11-a569-000d3a9a943c
+TransactionNumber : 
+TransactionNumber : 
+UnprocessedTransactionReferenceId :
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  959aafa2-6baf-ee11-a569-000d3a9bcd68
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Error"}

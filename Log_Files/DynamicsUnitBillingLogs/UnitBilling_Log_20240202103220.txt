@@ -1,0 +1,9 @@
+﻿20240202103221DynamicsPikeService - OracleUnitBillingAutomation - Started
+DynamicsPikeService - UnitBilling CREATE Started :20240202103222
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_detailedrecords ID fcc9db3e-dbc1-ee11-9079-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_headers ID a22f3d3a-dbc1-ee11-9079-000d3a9bcd68
+TransactionNumber : 
+UnprocessedTransactionReferenceId :
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  fcc9db3e-dbc1-ee11-9079-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"PPM Error"}

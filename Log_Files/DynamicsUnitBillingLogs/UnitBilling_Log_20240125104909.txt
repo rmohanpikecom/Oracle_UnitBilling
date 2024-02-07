@@ -1,0 +1,16 @@
+﻿20240125104911DynamicsPikeService - OracleUnitBillingAutomation - Started
+DynamicsPikeService - UnitBilling CREATE Started :20240125104911
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_detailedrecords ID 150ceb72-49bb-ee11-a569-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_headers ID 0f0ceb72-49bb-ee11-a569-000d3a9a943c
+TransactionNumber : 82954225
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  0f0ceb72-49bb-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  150ceb72-49bb-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_detailedrecords ID e3c9d6c5-4cbb-ee11-a569-000d3a9a943c
+Dynamics Update Payload : {"hsl_send_to_ppm":"In Process" } For hsl_oracleintegrationbatch_headers ID e1c9d6c5-4cbb-ee11-a569-000d3a9a943c
+TransactionNumber : 82954226
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  e1c9d6c5-4cbb-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  e3c9d6c5-4cbb-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}

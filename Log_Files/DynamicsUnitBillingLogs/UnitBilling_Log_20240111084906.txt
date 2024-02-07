@@ -1,0 +1,34 @@
+﻿20240111084906DynamicsPikeService - OracleUnitBillingAutomation - Started
+DynamicsPikeService - UnitBilling CREATE Started :20240111084906
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID 16f9bfa4-6baf-ee11-a569-000d3a9bc14a
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID ced509a4-6baf-ee11-a569-000d3a9a943c
+TransactionNumber : 
+TransactionNumber : 
+UnprocessedTransactionReferenceId :
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  16f9bfa4-6baf-ee11-a569-000d3a9bc14a
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Error"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID 959aafa2-6baf-ee11-a569-000d3a9bcd68
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID ced509a4-6baf-ee11-a569-000d3a9a943c
+TransactionNumber : 
+TransactionNumber : 
+UnprocessedTransactionReferenceId :
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  959aafa2-6baf-ee11-a569-000d3a9bcd68
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Error"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID 9b9aafa2-6baf-ee11-a569-000d3a9bcd68
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID ced509a4-6baf-ee11-a569-000d3a9a943c
+TransactionNumber : 82946214
+TransactionNumber : 82946214
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  ced509a4-6baf-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  9b9aafa2-6baf-ee11-a569-000d3a9bcd68
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}
+PPM PC Update - completed 0 out of1
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_detailedrecords ID a59aafa2-6baf-ee11-a569-000d3a9bcd68
+Dynamics Update Payload : {"hsl_send_to_ppm_pc":"Inprocess" } For hsl_oracleintegrationbatch_headers ID ced509a4-6baf-ee11-a569-000d3a9a943c
+TransactionNumber : 82946215
+TransactionNumber : 82946215
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords Batch HeaderId :  ced509a4-6baf-ee11-a569-000d3a9a943c
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords DetailID :  a59aafa2-6baf-ee11-a569-000d3a9bcd68
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Success"}

@@ -1,0 +1,13 @@
+﻿DynamicsPikeService - OracleUnitBillingAutomation - Total Unit Billing Events 1
+2024-01-11T08_43DynamicsPikeService - OracleUnitBillingAutomation - Started 1
+DynamicsPikeService - OracleUnitBillingAutomation Started :2024-01-11T08_433
+Processing Unit Billing Events Records - 0 - out of 1 - Processing - Keith Isaacs 2024-01-10T03:52:15.8469147Z
+TransactionNumber : 
+Oracle Error Response :  Applying List binding LOV_K__TASK_ID with given set of values leads to no matching row for a row of type :UnprocessedProjectCostsRestVO_ProjectStandardCostCollectionFlexfields_ProjectStandardCostCollectionFlexfields_PJCDFFVO, key oracle.jbo.Key[300002827944101 ]
+Dynamics Response empty Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords BatchHeaderId :  e70dc965-2dcc-4ba7-acf7-584ebc214732
+Dynamics Payload :  { "hsl_oracleresponse":"No","hsl_oracle_message":"Applying List binding LOV_K__TASK_ID with given set of values leads to no matching row for a row of type :UnprocessedProjectCostsRestVO_ProjectStandardCostCollectionFlexfields_ProjectStandardCostCollectionFlexfields_PJCDFFVO, key oracle.jbo.Key[300002827944101 ]","hsl_send_to_ppm":"No","hsl_ppm_pc_transaction_id":"Error","hsl_ppm_message":"Error in one/more timeentries upload to PPM","hsl_oracle_status":"Error"}
+Dynamics Success Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords BatchHeaderId :  e70dc965-2dcc-4ba7-acf7-584ebc214732
+Dynamics Success Update Payload :  { "hsl_oracle_batch_status":"Error"}
+Dynamics Payload :  { "hsl_oracleresponse":"No","hsl_oracle_message":"Applying List binding LOV_K__TASK_ID with given set of values leads to no matching row for a row of type :UnprocessedProjectCostsRestVO_ProjectStandardCostCollectionFlexfields_ProjectStandardCostCollectionFlexfields_PJCDFFVO, key oracle.jbo.Key[300002827944101 ]","hsl_send_to_ppm":"No","hsl_ppm_pc_transaction_id":"Error","hsl_ppm_message":"Error in one/more timeentries upload to PPM","hsl_oracle_status":"Error"}
+Dynamics Response  :  Applying List binding LOV_K__TASK_ID with given set of values leads to no matching row for a row of type :UnprocessedProjectCostsRestVO_ProjectStandardCostCollectionFlexfields_ProjectStandardCostCollectionFlexfields_PJCDFFVO, key oracle.jbo.Key[300002827944101 ]
+=========================================================================
