@@ -1,4 +1,0 @@
-﻿DynamicsPikeService - OracleUnitBillingAutomation - Total Unit Billing Events 2
-2024-01-23T00_14DynamicsPikeService - OracleUnitBillingAutomation - Started 1
-DynamicsPikeService - OracleUnitBillingAutomation Started :2024-01-23T00_143
-Processing Unit Billing Events Records - 0 - out of 2 - Processing - Keith Isaacs 2024-01-22T14:17:15.6512820Z

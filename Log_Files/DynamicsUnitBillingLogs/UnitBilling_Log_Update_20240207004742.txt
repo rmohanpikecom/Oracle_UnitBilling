@@ -1,0 +1,106 @@
+﻿DynamicsPikeService (Update) - OracleUnitBillingAutomation - Started
+Featching Header Records for Batch = Keith Isaacs 2024-02-06T18:14:18.7256350Z
+Processing Header Count 1 out of 1
+DynamicsPikeService - OracleUnitBillingAutomation - Total Unit Billing Events 1
+Processing Detail Count 1 out of 6
+Checking if the Transaction is already pushed to PPM for Detail Record Id 9872b988-1bc5-ee11-9079-000d3a9a943c
+Payload for Getting the Transaction Number ?q=OriginalTransactionReference=Replicon_9872b988-1bc5-ee11-9079-000d3a9a943c;NetZeroItemFlag is null&expand=ProjectStandardCostCollectionFlexFields
+PPM Response to get TransactionNumber : {
+  "items" : [ ],
+  "count" : 0,
+  "hasMore" : false,
+  "limit" : 25,
+  "offset" : 0,
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://edyo-test.fa.us2.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/projectCosts",
+    "name" : "projectCosts",
+    "kind" : "collection"
+  } ]
+}
+TransactionNumber : 
+Processing Detail Count 2 out of 6
+Checking if the Transaction is already pushed to PPM for Detail Record Id a772b988-1bc5-ee11-9079-000d3a9a943c
+Payload for Getting the Transaction Number ?q=OriginalTransactionReference=Replicon_a772b988-1bc5-ee11-9079-000d3a9a943c;NetZeroItemFlag is null&expand=ProjectStandardCostCollectionFlexFields
+PPM Response to get TransactionNumber : {
+  "items" : [ ],
+  "count" : 0,
+  "hasMore" : false,
+  "limit" : 25,
+  "offset" : 0,
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://edyo-test.fa.us2.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/projectCosts",
+    "name" : "projectCosts",
+    "kind" : "collection"
+  } ]
+}
+TransactionNumber : 
+Processing Detail Count 3 out of 6
+Checking if the Transaction is already pushed to PPM for Detail Record Id ab72b988-1bc5-ee11-9079-000d3a9a943c
+Payload for Getting the Transaction Number ?q=OriginalTransactionReference=Replicon_ab72b988-1bc5-ee11-9079-000d3a9a943c;NetZeroItemFlag is null&expand=ProjectStandardCostCollectionFlexFields
+PPM Response to get TransactionNumber : {
+  "items" : [ ],
+  "count" : 0,
+  "hasMore" : false,
+  "limit" : 25,
+  "offset" : 0,
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://edyo-test.fa.us2.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/projectCosts",
+    "name" : "projectCosts",
+    "kind" : "collection"
+  } ]
+}
+TransactionNumber : 
+Processing Detail Count 4 out of 6
+Checking if the Transaction is already pushed to PPM for Detail Record Id 931f5d87-1bc5-ee11-9079-000d3a9bcd68
+Payload for Getting the Transaction Number ?q=OriginalTransactionReference=Replicon_931f5d87-1bc5-ee11-9079-000d3a9bcd68;NetZeroItemFlag is null&expand=ProjectStandardCostCollectionFlexFields
+PPM Response to get TransactionNumber : {
+  "items" : [ ],
+  "count" : 0,
+  "hasMore" : false,
+  "limit" : 25,
+  "offset" : 0,
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://edyo-test.fa.us2.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/projectCosts",
+    "name" : "projectCosts",
+    "kind" : "collection"
+  } ]
+}
+TransactionNumber : 
+Processing Detail Count 5 out of 6
+Checking if the Transaction is already pushed to PPM for Detail Record Id 9a1f5d87-1bc5-ee11-9079-000d3a9bcd68
+Payload for Getting the Transaction Number ?q=OriginalTransactionReference=Replicon_9a1f5d87-1bc5-ee11-9079-000d3a9bcd68;NetZeroItemFlag is null&expand=ProjectStandardCostCollectionFlexFields
+PPM Response to get TransactionNumber : {
+  "items" : [ ],
+  "count" : 0,
+  "hasMore" : false,
+  "limit" : 25,
+  "offset" : 0,
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://edyo-test.fa.us2.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/projectCosts",
+    "name" : "projectCosts",
+    "kind" : "collection"
+  } ]
+}
+TransactionNumber : 
+Processing Detail Count 6 out of 6
+Checking if the Transaction is already pushed to PPM for Detail Record Id b21f5d87-1bc5-ee11-9079-000d3a9bcd68
+Payload for Getting the Transaction Number ?q=OriginalTransactionReference=Replicon_b21f5d87-1bc5-ee11-9079-000d3a9bcd68;NetZeroItemFlag is null&expand=ProjectStandardCostCollectionFlexFields
+PPM Response to get TransactionNumber : {
+  "items" : [ ],
+  "count" : 0,
+  "hasMore" : false,
+  "limit" : 25,
+  "offset" : 0,
+  "links" : [ {
+    "rel" : "self",
+    "href" : "https://edyo-test.fa.us2.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/projectCosts",
+    "name" : "projectCosts",
+    "kind" : "collection"
+  } ]
+}
+TransactionNumber : 

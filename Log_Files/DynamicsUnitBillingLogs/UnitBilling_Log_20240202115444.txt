@@ -1,6 +1,0 @@
-﻿DynamicsPikeService - OracleUnitBillingAutomation - Total Unit Billing Events 7
-2024-02-02T11_55DynamicsPikeService - OracleUnitBillingAutomation - Started 1
-DynamicsPikeService - OracleUnitBillingAutomation Started :2024-02-02T11_553
-Processing Unit Billing Events Records - 0 - out of 7 - Processing - Keith Isaacs 2024-02-02T16:54:06.3797745Z
-TransactionNumber : 
-Dynamics Failure Update Payload for  Entity : hsl_oracleintegrationbatch_detailedrecords BatchHeaderId :  51fce741-9405-4f33-a5fd-d8898bae5cb2

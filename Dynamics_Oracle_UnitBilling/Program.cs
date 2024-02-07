@@ -503,17 +503,15 @@ namespace Dynamics_Oracle_UnitBilling
         public static void PPM_EXEC_ESSJOB(string ExpenditureBatch)
         {
 
-            string? PPM_EssJob_Url = System.Configuration.ConfigurationManager.AppSettings["PPM_EssJob_Url"]!.ToString();
+            string? PPM_EssJob_Url = System.Configuration.ConfigurationManager.AppSettings["Oracle_Url"]!.ToString();
             string? PPM_EssJob_Sub_Url = System.Configuration.ConfigurationManager.AppSettings["PPM_EssJob_Sub_Url"]!.ToString();
-            string? ESS_Cost_Units = System.Configuration.ConfigurationManager.AppSettings["ESS_Cost_Units"]!.ToString();
 
             Console.WriteLine("DynamicsPikeService - PPM_ESSJOB Started :" + DateTime.Now.ToString("yyyy-MM-ddTHH\\_mm"));
 
             string? strBU_Name = System.Configuration.ConfigurationManager.AppSettings["Business_Unit"]!.ToString();
-            string? strEss_Labor = System.Configuration.ConfigurationManager.AppSettings["ESS_Job_Labor"]!.ToString();
             string? strEss_Units = System.Configuration.ConfigurationManager.AppSettings["ESS_Job_Units"]!.ToString();
             string? strCost_Units = System.Configuration.ConfigurationManager.AppSettings["ESS_Cost_Units"]!.ToString();
-            string? ESSParameters_Batch = "Pike Business Unit," + strBU_Name + ",IMPORT_AND_PROCESS,PREV_NOT_IMPORTED,," + strEss_Units + "," + ESS_Cost_Units + "," + ExpenditureBatch + ",,,,,ORA_PJC_DETAIL";
+            string? ESSParameters_Batch = "Pike Business Unit," + strBU_Name + ",IMPORT_AND_PROCESS,PREV_NOT_IMPORTED,," + strEss_Units + "," + strCost_Units + "," + ExpenditureBatch + ",,,,,ORA_PJC_DETAIL";
             Console.WriteLine("ESSParameters_Units : " + ESSParameters_Batch);
             string strESS_Job_Units = PPM_ESSJOB(PPM_EssJob_Url, PPM_EssJob_Sub_Url, UserName, Password, ESSParameters_Batch);
             Console.WriteLine("PPM ESS JOB Created Successful!!");
