@@ -268,6 +268,26 @@ namespace Dynamics_Oracle_UnitBilling
                                             writer.WriteLine("Updating the Dynamics Detail Record Columns with the attached payload " + strPayload);
                                             UpdateDynamics(strEntity, DetailRecordId!, strPayload);
                                         }
+                                        else
+                                        {
+                                            HeaderException_Flag = 1;                                            
+                                            writer.WriteLine("Oracle Response for Detail Transaction Record :  " + response.Content!);
+
+                                            writer.WriteLine("Updating the Detail Record Status in Dynamics along with other values for " + DetailRecordId);
+
+                                            hsl_oracle_status_details = "Error";
+                                            hsl_oracle_message_details = response.Content!.ToString();
+
+
+                                            //Update the PPM Status
+                                            strPayload = "{ "
+                                           + "\"hsl_oracle_status\":\"" + hsl_oracle_status_details + "\","
+                                           + "\"hsl_oracle_message\":\"" + hsl_oracle_message_details + "\"}";
+                                           
+
+                                            writer.WriteLine("Updating the Dynamics Detail Record Columns with the attached payload " + strPayload);
+                                            UpdateDynamics(strEntity, DetailRecordId!, strPayload);
+                                        }
                                     }
                                 }
                                 catch (Exception exp)
@@ -363,14 +383,13 @@ namespace Dynamics_Oracle_UnitBilling
                     writer.WriteLine("Featching Header Records for Batch = " + ExpenditureBatchName);
                     writer.WriteLine("Processing Header Count " + (i + 1).ToString() + " out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
                     Console.WriteLine("Processing Header Count " + (i + 1).ToString() + " out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
+                    Console.WriteLine("---------------------------------------");
 
                     DataSet dsDetails = clsDAL.Dynamics_UniBilling_List_Update(ExpenditureBatchName);
                     try
                     {
                         writer.WriteLine("DynamicsPikeService - " + AppName + " - Total Unit Billing Events " + dsBatchHeader.Tables[0].Rows.Count.ToString());
-                        Console.WriteLine("Processing Header Count " + (i + 1).ToString() + " out of " + dsBatchHeader.Tables[0].Rows.Count.ToString());
-                        Console.WriteLine("---------------------------------------");
-
+                       
 
                         if (dsDetails.Tables[0].Rows.Count > 0)
                         {
@@ -535,7 +554,7 @@ namespace Dynamics_Oracle_UnitBilling
             string? ReqstId = "null";
             string? strEss_Job_Result = "";
             UserJSONString = "{\"OperationName\":\"" + OperationName + "\", \"JobPackageName\":\"" + JobPackageName + "\", \"JobDefName\": \"" + JobDefName + "\",\"ESSParameters\":\"" + ESSParameters + "\",\"ReqstId\":\"" + ReqstId + "\" }";
-            Console.WriteLine("Oracle Request : " + UserJSONString);
+            //Console.WriteLine("Oracle Request : " + UserJSONString);
 
             var options = new RestClientOptions(MainUrl)
             {
@@ -561,7 +580,8 @@ namespace Dynamics_Oracle_UnitBilling
                 TransactionType = dyArray.JobDefName!.ToString();
                 Transaction_Id = dyArray.ReqstId;
                 strEss_Job_Result = Transaction_Id.ToString();
-                Console.WriteLine("Oracle Transaction ID :  " + strEss_Job_Result);               
+                Console.WriteLine("Oracle Schedule Transaction ID :  " + strEss_Job_Result);
+                Console.WriteLine("---------------------------------------");
             }
 
             return strEss_Job_Result!;
